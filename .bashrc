@@ -1,2 +1,5 @@
 alias cleosd='docker exec -it eosio /opt/eosio/bin/cleos --url http://127.0.0.1:7777 --wallet-url http://127.0.0.1:5555'
+alias iwallet='docker exec -it iost /workdir/iwallet'
+alias iserver='docker exec -it iost /workdir/iserver'
 alias atmd='atom ~/Dropbox/docs/md/'
+alias la='ls -al'
