@@ -1,5 +1,6 @@
-source ~/.bashrc
-
+if [ -f ~/.bashrc ]; then
+        . ${HOME}/dotfiles/.bashrc
+fi
 # Command
 export PATH=$PATH:${HOME}/bin
 export PATH=$PATH:/usr/local/bin
@@ -20,3 +21,4 @@ export PATH=$PATH:$GOPATH/bin
 [[ -d ~/.rbenv  ]] && \
   export PATH=${HOME}/.rbenv/bin:${PATH} && \
   eval "$(rbenv init -)"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
