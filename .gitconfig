@@ -1,0 +1,17 @@
+[user]
+	name = Kosuke Numata
+	email = coursek8814@gmail.com
+[core]
+	editor = vim
+[commit]
+  template = .commit_template
+[alias]
+  st = status
+  co = checkout
+  ch = checkout
+  br = branch
+  cm = commit
+  sw = switch
+  rs = restore
+[push]
+  default = current
