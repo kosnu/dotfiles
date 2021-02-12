@@ -1,10 +1,10 @@
 [user]
-	name = Kosuke Numata
-	email = coursek8814@gmail.com
+  name = Kosuke Numata
+  email = coursek8814@gmail.com
 [core]
 	editor = vim
 [commit]
-  template = .commit_template
+  template = ~/.commit_template
 [alias]
   st = status
   co = checkout
@@ -15,3 +15,5 @@
   rs = restore
 [push]
   default = current
+[pull]
+  rebase = false

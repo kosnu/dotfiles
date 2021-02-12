@@ -13,6 +13,7 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 # Python
 export PATH=$PATH:/Library/Python/2.7/
+export PATH=$PATH:~/Library/Python/2.7/bin/
 # Node.js
 export PATH=$PATH:${HOME}.nodebrew/current/bin
 # Golang

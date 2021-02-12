@@ -12,14 +12,20 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 # Python
+export PATH=$PATH:${HOME}/bin
 export PATH=$PATH:/Library/Python/2.7/
+export PATH=$PATH:~/Library/Python/2.7/bin/
 # Node.js
 export PATH=$PATH:${HOME}.nodebrew/current/bin
 # Golang
-export GOPATH=$(go env GOPATH)
-export PATH=$PATH:$GOPATH/bin
+# export GOPATH=$(go env GOPATH)
+# export PATH=$PATH:$GOPATH/bin
 # Ruby
-[[ -d ~/.rbenv  ]] && \
-  export PATH=${HOME}/.rbenv/bin:${PATH} && \
+[[ -d ~/.rbenv ]] &&
+  export PATH=${HOME}/.rbenv/bin:${PATH} &&
   eval "$(rbenv init -)"
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv >/dev/null; then eval "$(rbenv init -)"; fi
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+alias gitcleanbr="git branch --merged|egrep -v '\* | production | master'|xargs git branch -D"
+alias gl='git log --oneline'

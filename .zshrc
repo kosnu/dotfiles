@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/numata_kosuke/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -103,3 +103,10 @@ export PATH=/usr/local/bin:$PATH
 # rbenvのパスを通す
 eval "$(rbenv init -)"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
+
+export PATH=~/.local/bin:$PATH
+
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
