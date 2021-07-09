@@ -1,41 +1,16 @@
 
 
 # ======== Emoji Prefix ========
-# 🎉  :tada: Initial commit.
-# ✨  :sparkles: New features.
-# 🔧  :wrench: Changing configuration files.
-# 💄  :lipstick: Updating the UI and style files.
-# ✏  :pencil2: Fixing typos.
-# 📝  :memo: Writing docs.
-# 🔥  :fire: Removing code or files.
-# 🐛  :bug: Fixing a bug.
-# ♻  :recycle: Refactoring code.
-# 🚨  :rotating_light: Removing linter warnings.
-# 🚧  :construction: Work in progress.
-# 💩  :hankey: Writing bad code that needs to be improved.
-# 🚑  :ambulance: Critical hotfix.
-# ➕  :heavy_plus_sign: Adding a dependency.
-# ➖  :heavy_minus_sign: Removing a dependency.
-# 🔊  :loud_sound: Adding logs.
-# 🔇  :mute: Removing logs.
-# ✅  :white_check_mark: Adding tests.
-# 🔒  :lock: Fixing security issues.
-# 🌐  :globe_with_meridians: Internationalization and localization.
-# ⬆️  :arrow_up: Upgrading dependencies.
-# ⬇️  :arrow_down: Downgrading dependencies.
-# ⏪  :rewind: Reverting changes.
-# 🔀  :twisted_rightwards_arrows: Merging branches.
-# 💡  :bulb: Documenting source code.
-# 💚  :green_heart: Fixing CI Build.
-# 👷  :construction_worker: Adding CI build system.
-# 🐳  :whale: Work about Docker.
-# 🚚  :truck: Moving or renaming files.
-# 🙈  :see_no_evil: Adding or updating a .gitignore file
-# 👽  :alien: Updating code due to external API changes.
-# 🚀  :rocket: Deploying stuff.
-# 🎨  :art: Improving structure / format of the code.
-# 🍱  :bento: Adding or updating assets.
-# 🏷  :label: Adding or updating types (Flow, TypesScript)
-# 🗃  :card_file_box: Performing database related changes.
-# 🔍  :mag: Improving SEO
-# 📦  :package: Updating compiled files or packages.
+# 🎉  :tada: 最初のコミットとか
+# ✨  :sparkles: 新機能
+# 🔧  :wrench: 設定ファイル
+# ✏  :pencil2: タイポの修正
+# 📝  :memo: ドキュメント
+# 🔥  :fire: ファオル、コードの削除
+# 🐛  :bug: バグ修正
+# ♻  :recycle: リファクタリングやコード変更
+# 🚨  :rotating_light: リンターエラーの修正
+# 🚧  :construction: 作業途中
+# 💩  :hankey: 非推奨のコード
+# ✅  :white_check_mark: 自動テスト
+# 🙈  :see_no_evil: Ignore系のファイル編集、作成

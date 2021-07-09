@@ -1,8 +1,5 @@
-alias cleosd='docker exec -it eosio /opt/eosio/bin/cleos --url http://127.0.0.1:7777 --wallet-url http://127.0.0.1:5555'
-alias cleos-kylin='docker exec -it eosio /opt/eosio/bin/cleos --url https://api-kylin.eoslaomao.com --wallet-url http://127.0.0.1:5555'
-alias iwalletd='docker exec -it iost /workdir/iwallet'
-alias iserverd='docker exec -it iost /workdir/iserver'
-alias atmd='atom ~/Dropbox/docs/md/'
-alias la='ls -al'
-alias eosio='${HOME}/bin/eosio'
-alias iost='${HOME}/bin/iost'
+# Command
+export PATH=$PATH:${HOME}/bin
+export PATH=$PATH:/usr/local/bin
+export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local:$PATH
