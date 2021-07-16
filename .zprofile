@@ -11,3 +11,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 # Node
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+
+# 便利コマンド
+alias gitcleanbr="git branch --merged|egrep -v '\* | production | master'|xargs git branch -D"
