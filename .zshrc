@@ -36,3 +36,5 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 setopt correct
 # ビープ音を鳴らさない
 setopt no_beep
+# コマンドでの*のマッチを無効にする
+setopt nonomatch
