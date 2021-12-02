@@ -38,3 +38,6 @@ setopt correct
 setopt no_beep
 # コマンドでの*のマッチを無効にする
 setopt nonomatch
+
+# for lima
+export DOCKER_HOST=unix://$HOME/docker.sock
