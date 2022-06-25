@@ -12,11 +12,11 @@ cpus: 1
 
 # Memory size
 # Default: "4GiB"
-memory: "4GiB"
+memory: "8GiB"
 
 # Disk size
 # Default: "100GiB"
-disk: "40GiB"
+disk: "60GiB"
 
 # This example requires Lima v0.8.0 or later
 images:
@@ -39,6 +39,8 @@ mounts:
     writable: true
   - location: "/tmp/lima"
     writable: true
+ssh:
+  localPort: 60022
 # containerd is managed by Docker, not by Lima, so the values are set to false here.
 containerd:
   system: false
