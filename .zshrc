@@ -1,13 +1,10 @@
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
 
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-export ZSH_THEME="robbyrussell"
 
 plugins=(git)
 
 export ZSH_DISABLE_COMPFIX=true
-source $ZSH/oh-my-zsh.sh
 
 export LANG=ja_JP.UTF-8
 
@@ -40,4 +37,17 @@ setopt no_beep
 setopt nonomatch
 
 # for lima
-export DOCKER_HOST=unix://$HOME/docker.sock
+export DOCKER_HOST=$(limactl list docker --format 'unix://{{.Dir}}/sock/docker.sock')
+
+# for starship
+eval "$(starship init zsh)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/kosnu/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kosnu/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/kosnu/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kosnu/google-cloud-sdk/completion.zsh.inc'; fi
+
+# for Volta
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
