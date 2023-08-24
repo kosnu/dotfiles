@@ -1,0 +1,7 @@
+add_newline = true
+
+[docker_context]
+format = "[$symbol]($style)"
+
+[package]
+disabled = true

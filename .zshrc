@@ -5,6 +5,7 @@
 plugins=(git)
 
 export ZSH_DISABLE_COMPFIX=true
+export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=/opt/homebrew/share/zsh-syntax-highlighting/highlighters
 
 export LANG=ja_JP.UTF-8
 
@@ -36,18 +37,17 @@ setopt no_beep
 # コマンドでの*のマッチを無効にする
 setopt nonomatch
 
-# for lima
-export DOCKER_HOST=$(limactl list docker --format 'unix://{{.Dir}}/sock/docker.sock')
-
 # for starship
 eval "$(starship init zsh)"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/kosnu/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/kosnu/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/kosnu/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/kosnu/google-cloud-sdk/completion.zsh.inc'; fi
+export STARSHIP_CONFIG=$HOME/dotfiles/starship.toml
 
 # for Volta
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
+# export VOLTA_HOME="$HOME/.volta"
+# export PATH="$VOLTA_HOME/bin:$PATH"
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
