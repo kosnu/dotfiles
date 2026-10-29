@@ -1,0 +1,105 @@
+#!/bin/zsh
+set -eu
+repo_root=${0:A:h:h}
+tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/gitcleanbr.XXXXXX")
+trap 'rm -rf "$tmpdir"' EXIT
+
+git init -q --bare "$tmpdir/origin.git"
+git init -q -b main "$tmpdir/repo"
+git -C "$tmpdir/repo" config user.name Test
+git -C "$tmpdir/repo" config user.email test@example.com
+git -C "$tmpdir/repo" commit -q --allow-empty -m initial
+git -C "$tmpdir/repo" remote add origin "$tmpdir/origin.git"
+git -C "$tmpdir/repo" push -q origin main
+git -C "$tmpdir/repo" branch merged
+git -C "$tmpdir/repo" branch used
+git -C "$tmpdir/repo" worktree add -q "$tmpdir/worktree" used
+git -C "$tmpdir/repo" switch -q -c squash
+git -C "$tmpdir/repo" commit -q --allow-empty -m squash
+squash_sha=$(git -C "$tmpdir/repo" rev-parse HEAD)
+git -C "$tmpdir/repo" switch -q main
+git -C "$tmpdir/repo" switch -q -c unmerged
+git -C "$tmpdir/repo" commit -q --allow-empty -m unmerged
+unmerged_sha=$(git -C "$tmpdir/repo" rev-parse HEAD)
+git -C "$tmpdir/repo" switch -q -c child
+mkdir "$tmpdir/bin"
+cat > "$tmpdir/bin/gh" <<MOCK
+#!/bin/sh
+printf '%s %s\\n' "\$1" "\$2" >> '$tmpdir/gh-calls'
+case "\$1 \$2" in
+  'repo view') [ "\$3" = '$tmpdir/origin.git' ] || exit 1; echo main ;;
+  'pr list')
+    [ "\$3" = --repo ] && [ "\$4" = '$tmpdir/origin.git' ] || exit 1
+    [ "\${MOCK_PR_FAIL:-}" != 1 ] || exit 1
+    if [ "\${MOCK_REF_CHANGE:-}" = 1 ]; then
+      git update-ref refs/heads/moving '$unmerged_sha' || exit 1
+      git worktree add -q '$tmpdir/checkout-later' checkout-later || exit 1
+    fi
+    printf 'squash\\t%s\\n' '$squash_sha'
+    ;;
+  *) exit 1 ;;
+esac
+MOCK
+chmod +x "$tmpdir/bin/gh"
+export PATH="$tmpdir/bin:$PATH"
+export GH_REPO=example/unrelated
+sed -n '/^gitcleanbr() {/,/^}/p' "$repo_root/.zshrc" > "$tmpdir/function.zsh"
+source "$tmpdir/function.zsh"
+cd "$tmpdir/repo"
+output=$(gitcleanbr --dry-run)
+[[ "$output" == *'candidate: merged'* && "$output" == *'candidate: squash'* ]]
+[[ "$output" != *'candidate: unmerged'* ]]
+[[ "$output" != *'candidate: used'* && "$output" != *'candidate: child'* ]]
+git show-ref --verify -q refs/heads/squash
+output=$(gitcleanbr 2> "$tmpdir/delete-errors")
+[[ "$output" == *'deleted: 2'* && ! -s "$tmpdir/delete-errors" ]]
+! git show-ref --verify -q refs/heads/merged
+! git show-ref --verify -q refs/heads/squash
+git show-ref --verify -q refs/heads/unmerged
+git show-ref --verify -q refs/heads/used
+
+# 使用中・保護対象だけなら、origin に接続できなくても正常終了する
+git worktree add -q "$tmpdir/unmerged-worktree" unmerged
+git remote set-url origin "$tmpdir/unavailable.git"
+: > "$tmpdir/gh-calls"
+[[ "$(gitcleanbr)" == 'deleted: 0' ]]
+[[ -z "$(gitcleanbr --dry-run)" && ! -s "$tmpdir/gh-calls" ]]
+git remote set-url origin "$tmpdir/origin.git"
+
+# 通常のマージ履歴だけで判定できる場合は PR 一覧を取得しない
+git branch merged-only main
+: > "$tmpdir/gh-calls"
+[[ "$(gitcleanbr --dry-run)" == 'candidate: merged-only' ]]
+[[ "$(<"$tmpdir/gh-calls")" == 'repo view' ]]
+git branch -D merged-only >/dev/null
+
+# PR の取得に失敗したら、判定済みのブランチも含めて削除しない
+git branch merged-safety main
+git branch squash "$squash_sha"
+if MOCK_PR_FAIL=1 gitcleanbr; then
+  echo 'PR 取得失敗時は削除前に停止するべきです' >&2
+  exit 1
+fi
+git show-ref --verify -q refs/heads/merged-safety
+git show-ref --verify -q refs/heads/squash
+git branch -D merged-safety >/dev/null
+
+# 照合中のコミット追加と、新たな worktree での使用開始を保護する
+git branch moving main
+git branch checkout-later main
+output=$(MOCK_REF_CHANGE=1 gitcleanbr 2> "$tmpdir/race-errors")
+[[ "$output" == *'deleted: 1'* && ! -s "$tmpdir/race-errors" ]]
+[[ "$(git rev-parse moving)" == "$unmerged_sha" ]]
+git show-ref --verify -q refs/heads/checkout-later
+! git show-ref --verify -q refs/heads/squash
+
+git clone -q "$tmpdir/origin.git" "$tmpdir/other"
+git -C "$tmpdir/other" switch -q main
+git -C "$tmpdir/other" -c user.name=Test -c user.email=test@example.com commit -q --allow-empty -m newer
+git -C "$tmpdir/other" push -q origin main
+if gitcleanbr --dry-run; then
+  echo '基準コミットがない場合は停止するべきです' >&2
+  exit 1
+fi
+git show-ref --verify -q refs/heads/unmerged
+echo 'gitcleanbr: OK'
