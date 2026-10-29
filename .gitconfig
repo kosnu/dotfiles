@@ -7,8 +7,6 @@
   template = ~/.commit_template
 [alias]
   st = status
-  co = checkout
-  ch = checkout
   br = branch
   cm = commit
   sw = switch

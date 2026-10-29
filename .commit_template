@@ -1,16 +1,19 @@
 
 
-# ======== Emoji Prefix ========
-# 🎉  :tada: 最初のコミットとか
-# ✨  :sparkles: 新機能
-# 🔧  :wrench: 設定ファイル
-# ✏  :pencil2: タイポの修正
-# 📝  :memo: ドキュメント
-# 🔥  :fire: ファオル、コードの削除
-# 🐛  :bug: バグ修正
-# ♻  :recycle: リファクタリングやコード変更
-# 🚨  :rotating_light: リンターエラーの修正
-# 🚧  :construction: 作業途中
-# 💩  :hankey: 非推奨のコード
-# ✅  :white_check_mark: 自動テスト
-# 🙈  :see_no_evil: Ignore系のファイル編集、作成
+# ======== Common Git Commit Prefixes ========
+# feat: 新機能の追加
+# fix: バグ修正
+# docs: ドキュメントの追加や更新
+# style: コードのフォーマットやスタイルの変更 (動作に影響しない)
+# refactor: リファクタリング (機能追加やバグ修正を含まない)
+# perf: パフォーマンス改善
+# test: テストの追加や修正
+# build: ビルド関連の変更
+# ci: CI/CD関連の変更
+# chore: その他の雑務 (例: パッケージの更新)
+# revert: コミットの取り消し
+# config: 設定ファイルの変更
+# remove: 不要なコードやファイルの削除
+# wip: 作業途中のコミット
+# typo: タイポ修正
+# ignore: .gitignoreなどの変更
